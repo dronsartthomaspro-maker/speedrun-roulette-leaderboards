@@ -63,6 +63,13 @@ button { font: inherit; color: inherit; }
 }
 .tab:hover { color: var(--text); border-color: var(--muted); }
 .tab[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.tools { display: flex; align-items: center; gap: 8px; }
+.download {
+  display: inline-block; text-decoration: none; font-weight: 700; color: #1a1205;
+  background: var(--accent); border-radius: 10px; padding: 8px 14px; white-space: nowrap;
+}
+.download:hover { filter: brightness(1.08); }
+.download.big { padding: 10px 18px; margin: 8px 0; }
 .lang {
   background: var(--card); border: 1px solid var(--line); border-radius: 10px;
   padding: 8px 12px; cursor: pointer; font-weight: 700;
@@ -98,6 +105,19 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 16px 24px; }
 .small { font-size: 13px; }
 .special { margin: 0 0 10px; font-weight: 700; color: var(--accent-2); }
 
+.showcase {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 16px; margin-bottom: 12px; border-radius: 12px;
+  background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent) 22%, var(--card-2)), var(--card-2) 70%);
+  border: 1px solid var(--line);
+}
+.showcase:empty { display: none; }
+.showcase img { width: 96px; height: 96px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.35)); }
+.objectives img.oicon { width: 24px; height: 24px; flex: none; }
+.challenge-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.challenge-head h2 { margin: 0; }
+.challenge-icon { width: 48px; height: 48px; flex: none; }
+.chip img { width: 20px; height: 20px; vertical-align: -5px; margin-right: 6px; }
 .objectives { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
 .objectives li {
   display: flex; align-items: center; gap: 10px; padding: 10px 12px;
@@ -170,6 +190,7 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 16px 24px; }
 }
 @media (max-width: 600px) {
   .top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
+  .tools .download { display: none; } /* still in the footer */
   .tabs { grid-column: 1 / -1; grid-row: 2; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .tabs::-webkit-scrollbar { display: none; }
   .tab { flex: 1 0 auto; text-align: center; }

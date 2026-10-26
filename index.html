@@ -22,6 +22,7 @@
       <button class="tab" role="tab" data-tab="challenges" data-i18n="tabChallenges">Challenges</button>
     </nav>
     <div class="tools">
+      <a class="download" href="https://www.curseforge.com/minecraft/mc-mods/speedrun-roulette" target="_blank" rel="noopener" data-i18n="download">Download the mod</a>
       <button class="lang" id="lang" type="button" aria-label="Language">FR</button>
     </div>
   </header>
@@ -45,6 +46,7 @@
         <article class="card">
           <h2 data-i18n="theChallenge">The challenge</h2>
           <p class="special" id="daily-title" hidden></p>
+          <div class="showcase" id="daily-showcase"></div>
           <ul class="objectives" id="daily-objectives"></ul>
           <p class="muted small" id="daily-mode"></p>
         </article>
@@ -82,7 +84,10 @@
       <div class="chips" id="challenge-chips" role="tablist" aria-label="Challenges"></div>
       <div class="grid2">
         <article class="card">
-          <h2 id="challenge-name"></h2>
+          <div class="challenge-head">
+            <img class="challenge-icon" id="challenge-icon" alt="" width="64" height="64">
+            <h2 id="challenge-name"></h2>
+          </div>
           <p><span class="badge" id="challenge-difficulty"></span></p>
           <p id="challenge-description"></p>
           <p class="muted small" id="challenge-meta"></p>
@@ -100,6 +105,7 @@
   <footer class="foot">
     <p><span data-i18n="footer">Speedrun Roulette — a Minecraft speedrun mod (Fabric 26.3).</span>
       <span class="muted" id="updated"></span></p>
+    <p><a class="download big" href="https://www.curseforge.com/minecraft/mc-mods/speedrun-roulette" target="_blank" rel="noopener" data-i18n="downloadLong">Download Speedrun Roulette on CurseForge</a></p>
     <p class="muted small" data-i18n="notMojang">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
   </footer>
 

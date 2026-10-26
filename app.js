@@ -13,6 +13,7 @@ const REFRESH_MS = 60_000;
 const I18N = {
   en: {
     tabDaily: "Daily Challenge", tabHall: "Best players", tabChallenges: "Challenges",
+    download: "Download the mod", downloadLong: "Download Speedrun Roulette on CurseForge",
     today: "Today", yesterday: "Yesterday", theChallenge: "The challenge", leaderboard: "Leaderboard",
     mostWins: "Most Daily wins", mostWinsHint: "Number of days finished in first place.",
     recentWinners: "Recent winners",
@@ -35,6 +36,7 @@ const I18N = {
   },
   fr: {
     tabDaily: "Défi du jour", tabHall: "Meilleurs joueurs", tabChallenges: "Défis",
+    download: "Télécharger le mod", downloadLong: "Télécharger Speedrun Roulette sur CurseForge",
     today: "Aujourd'hui", yesterday: "Hier", theChallenge: "Le défi", leaderboard: "Classement",
     mostWins: "Le plus de Daily gagnés", mostWinsHint: "Nombre de jours terminés à la première place.",
     recentWinners: "Derniers vainqueurs",
@@ -111,6 +113,20 @@ function el(tag, cls, text) {
   return e;
 }
 
+/** Icon of an item ("minecraft:diamond"), exported from the game into items/. */
+function itemIcon(itemId, cls, size) {
+  const id = String(itemId || "");
+  const m = id.match(/^(?:minecraft:)?([a-z0-9_./-]+)$/);
+  if (!m) return null;
+  const img = el("img", cls);
+  img.alt = "";
+  img.width = size; img.height = size;
+  img.loading = "lazy";
+  img.src = `items/${m[1].split("/").pop()}.png`;
+  img.onerror = () => img.remove();
+  return img;
+}
+
 function headUrl(uuid, size) {
   return uuid ? `https://mc-heads.net/avatar/${encodeURIComponent(uuid)}/${size}` : "";
 }
@@ -165,6 +181,8 @@ async function loadDaily() {
     const cfg = Array.isArray(cfgRows) ? cfgRows[0] : null;
     const list = $("daily-objectives");
     list.replaceChildren();
+    const showcase = $("daily-showcase");
+    showcase.replaceChildren();
     const objectives = (cfg && Array.isArray(cfg.objectives)) ? cfg.objectives : [];
     // The day's titles are the objective name in French and in English. Older rows carry the
     // name in the language of the player who published them (the same text twice): not used.
@@ -175,8 +193,12 @@ async function loadDaily() {
       const { type } = objectiveLabel(o);
       const name = titled ? (lang === "fr" ? cfg.special_title_fr : cfg.special_title_en) : objectiveLabel(o).name;
       const li = el("li");
+      const small = itemIcon(o.icon_item || o.id, "oicon", 24);
+      if (small) li.append(small);
       li.append(el("span", "otype", t("types")[type] || type.toLowerCase()), el("span", "oname", name));
       list.append(li);
+      const big = itemIcon(o.icon_item || o.id, "", 96);
+      if (big) { big.alt = name; showcase.append(big); }
     }
     $("daily-mode").textContent = cfg ? t("mode")(cfg.mini_game_mode || "CLASSIC", objectives.length || cfg.objective_count || 1) : "";
 
@@ -246,7 +268,10 @@ async function loadChallenges() {
     const chips = $("challenge-chips");
     chips.replaceChildren();
     for (const c of challenges) {
-      const b = el("button", "chip", c.name_localized || c.name);
+      const b = el("button", "chip");
+      const icon = itemIcon(c.icon_item, "", 20);
+      if (icon) b.append(icon);
+      b.append(document.createTextNode(c.name_localized || c.name));
       b.type = "button";
       b.setAttribute("role", "tab");
       b.setAttribute("aria-selected", String(c.id === selectedChallenge));
@@ -272,6 +297,10 @@ async function loadChallengeBoard() {
   const c = challenges.find(x => x.id === selectedChallenge);
   if (!c) return;
   $("challenge-name").textContent = c.name_localized || c.name;
+  const icon = $("challenge-icon");
+  const m = String(c.icon_item || "").match(/^(?:minecraft:)?([a-z0-9_]+)$/);
+  icon.hidden = !m;
+  if (m) { icon.src = `items/${m[1]}.png`; icon.onerror = () => { icon.hidden = true; }; }
   const badge = $("challenge-difficulty");
   badge.textContent = c.difficulty_localized || c.difficulty || "";
   badge.className = `badge ${difficultyClass(c.difficulty)}`;
