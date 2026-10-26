@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speedrun Roulette — Leaderboards</title>
+  <meta name="description" content="Speedrun Roulette (Minecraft mod): today's Daily Challenge, yesterday's results, the best players and the Community Challenges leaderboards.">
+  <link rel="icon" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#daily" aria-label="Speedrun Roulette">
+      <img src="assets/classic.png" alt="Speedrun Roulette" width="512" height="171">
+    </a>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" data-tab="daily" data-i18n="tabDaily">Daily Challenge</button>
+      <button class="tab" role="tab" data-tab="hall" data-i18n="tabHall">Best players</button>
+      <button class="tab" role="tab" data-tab="challenges" data-i18n="tabChallenges">Challenges</button>
+    </nav>
+    <div class="tools">
+      <button class="lang" id="lang" type="button" aria-label="Language">FR</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== DAILY ===================== -->
+    <section class="panel" id="tab-daily" role="tabpanel" hidden>
+      <div class="hero hero-daily">
+        <img class="hero-logo" src="assets/daily.png" alt="Daily Challenge" width="512" height="203">
+        <div class="hero-side">
+          <div class="daytoggle" role="group" aria-label="Day">
+            <button type="button" class="seg" data-day="today" data-i18n="today">Today</button>
+            <button type="button" class="seg" data-day="yesterday" data-i18n="yesterday">Yesterday</button>
+          </div>
+          <p class="date" id="daily-date"></p>
+          <p class="countdown" id="daily-countdown"></p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <article class="card">
+          <h2 data-i18n="theChallenge">The challenge</h2>
+          <p class="special" id="daily-title" hidden></p>
+          <ul class="objectives" id="daily-objectives"></ul>
+          <p class="muted small" id="daily-mode"></p>
+        </article>
+        <article class="card">
+          <h2><span data-i18n="leaderboard">Leaderboard</span> <span class="count" id="daily-count"></span></h2>
+          <div class="podium" id="daily-podium"></div>
+          <ol class="board" id="daily-board"></ol>
+          <p class="state" id="daily-state"></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== HALL OF FAME ===================== -->
+    <section class="panel" id="tab-hall" role="tabpanel" hidden>
+      <div class="grid2">
+        <article class="card">
+          <h2 data-i18n="mostWins">Most Daily wins</h2>
+          <p class="muted small" data-i18n="mostWinsHint">Number of days finished in first place.</p>
+          <ol class="board wins" id="hall-board"></ol>
+          <p class="state" id="hall-state"></p>
+        </article>
+        <article class="card">
+          <h2 data-i18n="recentWinners">Recent winners</h2>
+          <ol class="board history" id="hall-history"></ol>
+          <p class="state" id="history-state"></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== CHALLENGES ===================== -->
+    <section class="panel" id="tab-challenges" role="tabpanel" hidden>
+      <div class="hero hero-community">
+        <img class="hero-logo" src="assets/community.png" alt="Community Challenges" width="512" height="139">
+      </div>
+      <div class="chips" id="challenge-chips" role="tablist" aria-label="Challenges"></div>
+      <div class="grid2">
+        <article class="card">
+          <h2 id="challenge-name"></h2>
+          <p><span class="badge" id="challenge-difficulty"></span></p>
+          <p id="challenge-description"></p>
+          <p class="muted small" id="challenge-meta"></p>
+        </article>
+        <article class="card">
+          <h2><span data-i18n="leaderboard">Leaderboard</span> <span class="count" id="challenge-count"></span></h2>
+          <div class="podium" id="challenge-podium"></div>
+          <ol class="board" id="challenge-board"></ol>
+          <p class="state" id="challenge-state"></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p><span data-i18n="footer">Speedrun Roulette — a Minecraft speedrun mod (Fabric 26.3).</span>
+      <span class="muted" id="updated"></span></p>
+    <p class="muted small" data-i18n="notMojang">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+  </footer>
+
+  <template id="row-tpl">
+    <li class="row">
+      <span class="rank"></span>
+      <img class="head" alt="" width="24" height="24" loading="lazy">
+      <span class="name"></span>
+      <span class="time"></span>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
